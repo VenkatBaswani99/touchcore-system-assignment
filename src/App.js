@@ -5,7 +5,6 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
-  Legend,
   ResponsiveContainer,
 } from 'recharts'
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar'
@@ -16,7 +15,7 @@ import {TbLogout} from 'react-icons/tb'
 import {FaRegNewspaper} from 'react-icons/fa'
 import {BiSpreadsheet} from 'react-icons/bi'
 import {MdOutlinePermIdentity} from 'react-icons/md'
-import {IoIosNotificationsOutline} from 'react-icons/io'
+import {VscBellDot} from 'react-icons/vsc'
 // import Chart from './components/Chart'
 // import RadialBar from './components/RadialBar'
 import './App.css'
@@ -56,13 +55,13 @@ const data = [
   {
     group_name: '45',
     Employer: 52,
-    Employee: 110,
-    Total_Interest: 130,
+    Employee: 108,
+    Total_Interest: 125,
   },
   {
     group_name: '50',
     Employer: 65,
-    Employee: 110,
+    Employee: 108,
     Total_Interest: 135,
   },
   {
@@ -124,6 +123,9 @@ class App extends Component {
     return (
       <div className="main-container1">
         <div className="main-container2">
+          <button type="button" className="icon-button mobile-bell">
+            <VscBellDot className="icon mobile-bell" />
+          </button>
           <div className="sub-container1">
             <div className="container1">
               <div className="shortcut-container">
@@ -138,8 +140,8 @@ class App extends Component {
                   </button>
                 </div>
                 <div className="shortcut-container-lower">
-                  <button type="button" className="icon-button home">
-                    <CgHome className="icon" />
+                  <button type="button" className="icon-button active-icon">
+                    <CgHome className="icon active-color" />
                   </button>
                   <button type="button" className="icon-button">
                     <FaRegNewspaper className="icon" />
@@ -154,7 +156,7 @@ class App extends Component {
               </div>
               <div className="logout-container">
                 <button type="button" className="icon-button">
-                  <IoIosNotificationsOutline className="icon" />
+                  <VscBellDot className="icon" />
                 </button>
                 <button type="button" className="icon-button">
                   <TbLogout className="icon" />
@@ -184,7 +186,10 @@ class App extends Component {
                 <div className="second">
                   <div className="second1">
                     <h1 className="balance-heading">$4,000</h1>
-                    <p className="balance-para">Year-to-Date Contributions</p>
+                    <p className="balance-para desktop">
+                      Year-to-Date Contributions
+                    </p>
+                    <p className="balance-para-mobile">Year-to-Date</p>
                   </div>
                   <div className="second2">
                     <h1 className="balance-heading">$1,892</h1>
@@ -196,30 +201,30 @@ class App extends Component {
                 </button>
               </div>
 
-              <ul className="transaction-container">
+              <div className="transaction-container">
                 <h1 className="transaction-heading1">Recent Transactions</h1>
-                <li className="list1">
+                <div className="list1">
                   <p className="transaction-para">2020-08-07</p>
                   <h1 className="transaction-heading">
                     Withdrawal Transfer to Bank-XXX11
                   </h1>
                   <hr className="line" />
-                </li>
-                <li className="list1">
+                </div>
+                <div className="list1">
                   <p className="transaction-para">2020-07-21</p>
                   <h1 className="transaction-heading">
                     Withdrawal Transfer to Bank-XXX11
                   </h1>
                   <hr className="line" />
-                </li>
-                <li className="list1">
+                </div>
+                <div className="list1">
                   <p className="transaction-para">2020-07-16</p>
                   <h1 className="transaction-heading">
                     Withdrawal Transfer to Bank-XXX11
                   </h1>
                   <hr className="line" />
-                </li>
-              </ul>
+                </div>
+              </div>
             </div>
             <div className="container3">
               <div className="income-container">
@@ -229,17 +234,17 @@ class App extends Component {
                 </div>
                 <div className="income-container-lower">
                   <div className="income-container-second">
-                    <h1 className="income-heading second">$300,000</h1>
+                    <h1 className="income-heading">$300,000</h1>
                     <p className="income-para">My Goal</p>
                     <hr className="income-line line1" />
                   </div>
                   <div className="income-container-third">
-                    <div className="1">
+                    <div className="income-container-third-1">
                       <h1 className="income-heading">59%</h1>
                       <p className="income-para">Goal Achieved</p>
                       <hr className="income-line" />
                     </div>
-                    <div className="2">
+                    <div className="income-container-third-2">
                       <h1 className="income-heading">$300</h1>
                       <p className="income-para">Est. Monthly Income</p>
                       <hr className="income-line" />
@@ -267,7 +272,7 @@ class App extends Component {
                   </div>
                 </div>
                 <div className="chart">
-                  <ResponsiveContainer width="100%" height={240}>
+                  <ResponsiveContainer width="100%" height={180}>
                     <BarChart
                       data={data}
                       margin={{
@@ -278,26 +283,23 @@ class App extends Component {
                       <XAxis
                         dataKey="group_name"
                         tick={{
-                          stroke: 'gray',
+                          stroke: '#b9b9b9',
                           strokeWidth: 1,
                         }}
                         axisLine={false}
+                        tickLine={false}
+                        minTickGap={50}
+                        allowDataOverflow
                       />
                       <YAxis
                         tickFormatter={this.DataFormatter}
                         tick={{
-                          stroke: 'gray',
+                          stroke: '#b9b9b9',
                           strokeWidth: 0,
                         }}
                         axisLine={false}
                         dataKey="key"
                       />
-                      <Legend
-                        wrapperStyle={{
-                          padding: 25,
-                        }}
-                      />
-
                       <Bar
                         dataKey="Employer"
                         name="Employer"
@@ -315,7 +317,7 @@ class App extends Component {
                       <Bar
                         dataKey="Total_Interest"
                         name="Total Interest"
-                        fill="#3ebdff"
+                        fill="#68a9f2"
                         barSize="5%"
                         stackId="a"
                       />
@@ -344,7 +346,7 @@ class App extends Component {
                         </select>
                       </label>
                     </li>
-
+                    <hr className="selection-line" />
                     <li className="each-item">
                       <label htmlFor="salary" className="label">
                         Salary:
@@ -355,6 +357,7 @@ class App extends Component {
                         </select>
                       </label>
                     </li>
+                    <hr className="selection-line" />
                     <li className="each-item">
                       <label htmlFor="gender" className="label">
                         Gender:
@@ -484,8 +487,8 @@ class App extends Component {
             </div>
           </div>
           <div className="mobile-view-icon">
-            <button type="button" className="icon-button home">
-              <CgHome className="icon" />
+            <button type="button" className="icon-button active-icon">
+              <CgHome className="icon active-color" />
             </button>
             <button type="button" className="icon-button">
               <FaRegNewspaper className="icon" />
